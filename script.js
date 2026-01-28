@@ -28,16 +28,26 @@ function operate(operate, num1, num2) {
 function createButtons() {
 	const numPad = document.querySelector(".num-pad");
 	let count = 9;
-	for (let i = 0; i < 3; i++) {
+	for (let i = 0; i < 4; i++) {
 		const newRow = document.createElement("div");
 		newRow.className = `row-${i}`;
-		for (let j = 0; j < 3; j++) {
+		const operators = ["+", "-", "*", "/"];
+		for (let j = 0; j < 4; j++) {
 			const newButton = document.createElement("button");
-			newButton.textContent = count;
+			if (j == 0) {
+				newButton.textContent = operators[i];
+			} else if (i == 3) {
+				if (count == 0) newButton.textContent = count;
+				else if (count == -1) newButton.textContent = "C";
+				else if (count == -2) newButton.textContent = "=";
+				count--;
+			} else {
+				newButton.textContent = count;
+				count--;
+			}
 			newButton.style.fontSize = "xx-large";
 			newButton.style.width = "50px";
 			newRow.appendChild(newButton);
-			count--;
 		}
 		numPad.appendChild(newRow);
 	}

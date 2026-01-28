@@ -2,7 +2,6 @@
 	box-sizing: border-box;
 	margin: 0px;
 	padding: 0px;
-	border: 1px black solid;
 }
 body {
 	display: flex;
@@ -12,7 +11,7 @@ body {
 }
 .calc-body {
 	width: 400px;
-	height: 600px;
+	height: 500px;
 	background-color: bisque;
 	display: flex;
 	flex-direction: column;
@@ -20,7 +19,7 @@ body {
 }
 
 .calc-screen {
-	height: 100px;
+	height: 80px;
 	width: 360px;
 	margin-top: 40px;
 	background-color: azure;
@@ -43,4 +42,5 @@ body {
 .num-pad > div {
 	display: flex;
 	flex-direction: row-reverse;
+	gap: 10px;
 }
