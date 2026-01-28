@@ -36,13 +36,23 @@ function createButtons() {
 			const newButton = document.createElement("button");
 			if (j == 0) {
 				newButton.textContent = operators[i];
+				newButton.className = `btn-operator`;
 			} else if (i == 3) {
-				if (count == 0) newButton.textContent = count;
-				else if (count == -1) newButton.textContent = "C";
-				else if (count == -2) newButton.textContent = "=";
+				if (count == 0) {
+					newButton.textContent = count;
+					newButton.className = `btn-digit`;
+				} else if (count == -1) {
+					newButton.textContent = "C";
+					newButton.className = `btn-clear`;
+				} else if (count == -2) {
+					newButton.textContent = "=";
+					newButton.className = "btn-operator";
+				}
 				count--;
 			} else {
 				newButton.textContent = count;
+				newButton.className = `btn-digit`;
+
 				count--;
 			}
 			newButton.style.fontSize = "xx-large";
@@ -52,4 +62,19 @@ function createButtons() {
 		numPad.appendChild(newRow);
 	}
 }
+
 createButtons();
+
+const digit = document.getElementsByClassName("btn-digit");
+const operatorPressed = document.getElementsByClassName("btn-operator");
+for (let i = 0; i < digit.length; i++) {
+	digit[i].addEventListener("click", (event) => {
+		let numBuilder = [];
+		numBuilder.push(event.target.textContent);
+		for (let i = 0; i < operatorPressed.length; i++) {
+			operatorPressed[i].addEventListener("click", (event) => {
+				operator = event.target.textContent;
+			});
+		}
+	});
+}
