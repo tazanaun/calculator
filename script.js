@@ -20,7 +20,7 @@ let operator = false;
 let num2 = "";
 
 function operate(operate, num1, num2) {
-	if (operate == "+") add(num1, num2);
+	if (operate == "+") console.log(add(num1, num2));
 	else if (operate == "-") subtract(num1, num2);
 	else if (operate == "*") multiply(num1, num2);
 	else if (operate == "/") divide(num1, num2);
@@ -71,32 +71,16 @@ function updateScreen(num) {
 
 createButtons();
 
-const digit = document.getElementsByClassName("btn-digit");
-const operatorChosen = document.getElementsByClassName("btn-operator");
-const equalSignChosen = document.querySelector("#btn-equal");
-for (let i = 0; i < digit.length; i++) {
-	digit[i].addEventListener("click", (event) => {
+const buttons = document.querySelector(".num-pad");
+
+buttons.addEventListener("click", (event) => {
+	buttonTypePressed = event.target.className;
+	console.log(buttonTypePressed);
+	if (buttonTypePressed == "btn-digit") {
 		numBuilder = numBuilder + event.target.textContent;
-		// Event listener for picked an operator
-		for (let i = 0; i < operatorChosen.length; i++) {
-			operatorChosen[i].addEventListener("click", (event) => {
-				operator = event.target.textContent;
-				console.log(operator);
-			});
-		}
-
-		// Event listener for equal sign
-		equalSignChosen.addEventListener("click", () => {
-			num2 = Number(numBuilder);
-			numBuilder = "";
-			operate(operator, num1, num2);
-		});
-
 		updateScreen(numBuilder);
-		if (operator) {
-			num1 = Number(numBuilder);
-			numBuilder = "";
-			updateScreen(numBuilder);
-		}
-	});
-}
+	} else if (buttonTypePressed === "btn-equal") {
+	} else if (buttonTypePressed === "btn-operator") {
+	} else if (buttonTypePressed === "btn-clear") {
+	}
+});
