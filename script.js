@@ -44,10 +44,10 @@ function createButtons() {
 					newButton.className = `btn-digit`;
 				} else if (count == -1) {
 					newButton.textContent = "C";
-					newButton.className = `btn-clear`;
+					newButton.id = `btn-clear`;
 				} else if (count == -2) {
 					newButton.textContent = "=";
-					newButton.className = "btn-equal";
+					newButton.id = "btn-equal";
 				}
 				count--;
 			} else {
@@ -73,21 +73,30 @@ createButtons();
 
 const digit = document.getElementsByClassName("btn-digit");
 const operatorChosen = document.getElementsByClassName("btn-operator");
+const equalSignChosen = document.querySelector("#btn-equal");
 for (let i = 0; i < digit.length; i++) {
 	digit[i].addEventListener("click", (event) => {
 		numBuilder = numBuilder + event.target.textContent;
+		// Event listener for picked an operator
 		for (let i = 0; i < operatorChosen.length; i++) {
 			operatorChosen[i].addEventListener("click", (event) => {
 				operator = event.target.textContent;
 				console.log(operator);
 			});
 		}
+
+		// Event listener for equal sign
+		equalSignChosen.addEventListener("click", () => {
+			num2 = Number(numBuilder);
+			numBuilder = "";
+			operate(operator, num1, num2);
+		});
+
 		updateScreen(numBuilder);
 		if (operator) {
 			num1 = Number(numBuilder);
 			numBuilder = "";
 			updateScreen(numBuilder);
-			operator = false;
 		}
 	});
 }
