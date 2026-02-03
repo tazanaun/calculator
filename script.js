@@ -64,8 +64,6 @@ function createButtons() {
 	}
 }
 
-function updateNum(num) {}
-
 function updateScreen(num) {
 	screen = document.querySelector("#screen-text");
 	screen.textContent = num;
@@ -78,12 +76,18 @@ const operatorChosen = document.getElementsByClassName("btn-operator");
 for (let i = 0; i < digit.length; i++) {
 	digit[i].addEventListener("click", (event) => {
 		numBuilder = numBuilder + event.target.textContent;
-	});
-}
-
-for (let i = 0; i < operatorChosen.length; i++) {
-	operatorChosen[i].addEventListener("click", (event) => {
-		operator = event.target.textContent;
-		console.log(operator);
+		for (let i = 0; i < operatorChosen.length; i++) {
+			operatorChosen[i].addEventListener("click", (event) => {
+				operator = event.target.textContent;
+				console.log(operator);
+			});
+		}
+		updateScreen(numBuilder);
+		if (operator) {
+			num1 = Number(numBuilder);
+			numBuilder = "";
+			updateScreen(numBuilder);
+			operator = false;
+		}
 	});
 }
