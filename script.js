@@ -14,9 +14,9 @@ function divide(a, b) {
 	if (b != 0) return a / b;
 }
 
-let num1;
+let num1 = "";
 let operator;
-let num2;
+let num2 = "";
 
 function operate(operate, num1, num2) {
 	if (operate == "+") add(num1, num2);
@@ -66,15 +66,8 @@ function createButtons() {
 createButtons();
 
 const digit = document.getElementsByClassName("btn-digit");
-const operatorPressed = document.getElementsByClassName("btn-operator");
 for (let i = 0; i < digit.length; i++) {
 	digit[i].addEventListener("click", (event) => {
-		let numBuilder = [];
-		numBuilder.push(event.target.textContent);
-		for (let i = 0; i < operatorPressed.length; i++) {
-			operatorPressed[i].addEventListener("click", (event) => {
-				operator = event.target.textContent;
-			});
-		}
+		num1 = num1 + event.target.textContent;
 	});
 }
