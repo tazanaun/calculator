@@ -14,8 +14,9 @@ function divide(a, b) {
 	if (b != 0) return a / b;
 }
 
+let numBuilder = "";
 let num1 = "";
-let operator;
+let operator = false;
 let num2 = "";
 
 function operate(operate, num1, num2) {
@@ -46,7 +47,7 @@ function createButtons() {
 					newButton.className = `btn-clear`;
 				} else if (count == -2) {
 					newButton.textContent = "=";
-					newButton.className = "btn-operator";
+					newButton.className = "btn-equal";
 				}
 				count--;
 			} else {
@@ -63,11 +64,26 @@ function createButtons() {
 	}
 }
 
+function updateNum(num) {}
+
+function updateScreen(num) {
+	screen = document.querySelector("#screen-text");
+	screen.textContent = num;
+}
+
 createButtons();
 
 const digit = document.getElementsByClassName("btn-digit");
+const operatorChosen = document.getElementsByClassName("btn-operator");
 for (let i = 0; i < digit.length; i++) {
 	digit[i].addEventListener("click", (event) => {
-		num1 = num1 + event.target.textContent;
+		numBuilder = numBuilder + event.target.textContent;
+	});
+}
+
+for (let i = 0; i < operatorChosen.length; i++) {
+	operatorChosen[i].addEventListener("click", (event) => {
+		operator = event.target.textContent;
+		console.log(operator);
 	});
 }
