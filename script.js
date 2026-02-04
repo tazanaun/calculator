@@ -73,6 +73,14 @@ function updateScreen(num) {
 	screen.textContent = num;
 }
 
+function clearState() {
+	numBuilder = "";
+	updateScreen("0");
+	num1 = 0;
+	num2 = 0;
+	operator = false;
+}
+
 createButtons();
 
 const buttons = document.querySelector(".num-pad");
@@ -96,14 +104,15 @@ buttons.addEventListener("click", (event) => {
 	} else if (buttonTypePressed === "btn-equal") {
 		if (num1 == 0) num1 = Number(numBuilder);
 		else num2 = Number(numBuilder);
-		num1 = operate(operator, num1, num2);
-		num2 = 0;
+		if (operator) {
+			num1 = operate(operator, num1, num2);
+			num2 = 0;
+		} else {
+			clearState();
+		}
+
 		updateScreen(num1);
 	} else if (buttonTypePressed === "btn-clear") {
-		numBuilder = "";
-		updateScreen(numBuilder);
-		num1 = 0;
-		num2 = 0;
-		operator = false;
+		clearState();
 	}
 });
