@@ -12,12 +12,16 @@ function multiply(a, b) {
 
 function divide(a, b) {
 	if (b != 0) return a / b;
+	else {
+		alert("Cannot Divide by Zero");
+		return 0;
+	}
 }
 
 let numBuilder = "";
-let num1 = "";
+let num1 = 0;
 let operator = false;
-let num2 = "";
+let num2 = 0;
 
 function operate(operate, num1, num2) {
 	if (operate == "+") return add(num1, num2);
@@ -80,21 +84,26 @@ buttons.addEventListener("click", (event) => {
 		numBuilder = numBuilder + event.target.textContent;
 		updateScreen(numBuilder);
 	} else if (buttonTypePressed === "btn-operator") {
-		num1 = Number(numBuilder);
+		if (num1 == 0) num1 = Number(numBuilder);
+		else {
+			num2 = Number(numBuilder);
+			num1 = operate(operator, num1, num2);
+		}
+		updateScreen(num1);
 		operator = event.target.textContent;
+		num2 = 0;
 		numBuilder = "";
-		updateScreen(numBuilder);
 	} else if (buttonTypePressed === "btn-equal") {
-		num2 = Number(numBuilder);
-
-		numBuilder = "";
-
-		updateScreen(operate(operator, num1, num2));
+		if (num1 == 0) num1 = Number(numBuilder);
+		else num2 = Number(numBuilder);
+		num1 = operate(operator, num1, num2);
+		num2 = 0;
+		updateScreen(num1);
 	} else if (buttonTypePressed === "btn-clear") {
 		numBuilder = "";
 		updateScreen(numBuilder);
-		num1 = "";
-		num2 = "";
-		operator = "";
+		num1 = 0;
+		num2 = 0;
+		operator = false;
 	}
 });
