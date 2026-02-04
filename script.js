@@ -20,10 +20,10 @@ let operator = false;
 let num2 = "";
 
 function operate(operate, num1, num2) {
-	if (operate == "+") console.log(add(num1, num2));
-	else if (operate == "-") subtract(num1, num2);
-	else if (operate == "*") multiply(num1, num2);
-	else if (operate == "/") divide(num1, num2);
+	if (operate == "+") return add(num1, num2);
+	else if (operate == "-") return subtract(num1, num2);
+	else if (operate == "*") return multiply(num1, num2);
+	else if (operate == "/") return divide(num1, num2);
 }
 
 function createButtons() {
@@ -44,10 +44,10 @@ function createButtons() {
 					newButton.className = `btn-digit`;
 				} else if (count == -1) {
 					newButton.textContent = "C";
-					newButton.id = `btn-clear`;
+					newButton.className = `btn-clear`;
 				} else if (count == -2) {
 					newButton.textContent = "=";
-					newButton.id = "btn-equal";
+					newButton.className = "btn-equal";
 				}
 				count--;
 			} else {
@@ -75,12 +75,26 @@ const buttons = document.querySelector(".num-pad");
 
 buttons.addEventListener("click", (event) => {
 	buttonTypePressed = event.target.className;
-	console.log(buttonTypePressed);
+
 	if (buttonTypePressed == "btn-digit") {
 		numBuilder = numBuilder + event.target.textContent;
 		updateScreen(numBuilder);
-	} else if (buttonTypePressed === "btn-equal") {
 	} else if (buttonTypePressed === "btn-operator") {
+		num1 = Number(numBuilder);
+		operator = event.target.textContent;
+		numBuilder = "";
+		updateScreen(numBuilder);
+	} else if (buttonTypePressed === "btn-equal") {
+		num2 = Number(numBuilder);
+
+		numBuilder = "";
+
+		updateScreen(operate(operator, num1, num2));
 	} else if (buttonTypePressed === "btn-clear") {
+		numBuilder = "";
+		updateScreen(numBuilder);
+		num1 = "";
+		num2 = "";
+		operator = "";
 	}
 });
