@@ -22,6 +22,9 @@ let numBuilder = "";
 let num1 = 0;
 let operator = false;
 let num2 = 0;
+let result = 0;
+let isNum1Set = false;
+let isNum2Set = false;
 
 function operate(operate, num1, num2) {
 	if (operate == "+") return add(num1, num2);
@@ -76,6 +79,8 @@ function updateScreen(num) {
 function clearState() {
 	numBuilder = "";
 	updateScreen("0");
+	isNum1Set = false;
+	isNum2Set = false;
 	num1 = 0;
 	num2 = 0;
 	operator = false;
@@ -92,21 +97,32 @@ buttons.addEventListener("click", (event) => {
 		numBuilder = numBuilder + event.target.textContent;
 		updateScreen(numBuilder);
 	} else if (buttonTypePressed === "btn-operator") {
-		if (num1 == 0) num1 = Number(numBuilder);
-		else {
+		if (isNum1Set == false) {
+			num1 = Number(numBuilder);
+			isNum1Set = true;
+		} else if (isNum1Set && !isNum2Set) {
+			//operator = event.target.textContent;
+			num2 = Number(numBuilder);
+			num1 = operate(operator, num1, num2);
+			num2 = 0;
+			isNum2Set = true;
+		} else {
+			isNum1Set = true;
 			num2 = Number(numBuilder);
 			num1 = operate(operator, num1, num2);
 		}
-		updateScreen(num1);
 		operator = event.target.textContent;
+		updateScreen(num1);
 		num2 = 0;
 		numBuilder = "";
 	} else if (buttonTypePressed === "btn-equal") {
-		if (num1 == 0) num1 = Number(numBuilder);
+		if (!isNum1Set) num1 = Number(numBuilder);
 		else num2 = Number(numBuilder);
 		if (operator) {
 			num1 = operate(operator, num1, num2);
 			num2 = 0;
+			isNum2Set = false;
+			numBuilder = "";
 		} else {
 			clearState();
 		}
